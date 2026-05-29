@@ -3,8 +3,16 @@ name: Java Build and Test Pipeline
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - 'README.md'
+      - 'Notas'
+      - '.gitignore'
   pull_request:
     branches: [ "main" ]
+    paths-ignore:
+      - 'README.md'
+      - 'Notas'
+      - '.gitignore'
 
 jobs:
   build:
