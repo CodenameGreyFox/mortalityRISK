@@ -1,9 +1,0 @@
-Por o modelo a ir buscar parametros juntamente com o .asc das especies 
-
-Receber densidade de individuos em ind/km e converter para população inicial
-
-Receber atropelamentos por ano e, com base na densidade, definir a percentagem de população atropelada
-
-Receber variação aleatória de parametros
-
-Implementar alguma forma de carrying capacity ou relação population size / cluch - Beverton holt
