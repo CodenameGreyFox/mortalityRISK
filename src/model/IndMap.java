@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Class that handles the population map
  *
- * @author  TomÃ© Neves
+ * @author  Tomé Neves
  */
 
 public class IndMap {
