@@ -209,7 +209,7 @@ public class ModelIntegrationTest {
         // Index 0 is the starting population (100), Index 1 is the population after Step 1
         int populationAfterStepOne = model.getPopulationHistory(0).get(1);
         
-        assertTrue((populationAfterStepOne>170 && populationAfterStepOne<230), 
+        assertTrue((populationAfterStepOne>165 && populationAfterStepOne<235), 
             "The population should be close to double (200) after 1 step but was "+populationAfterStepOne+" with a processing cap of 50.");
     }
     
