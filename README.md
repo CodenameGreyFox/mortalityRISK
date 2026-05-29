@@ -23,7 +23,7 @@ Key Features
 Getting Started
 Prerequisites
 
-    Java Runtime Environment (JRE) 8 or higher.
+    Java Developer's Kit (JDK) 25 or higher.
 
 Installation & Usage
 
