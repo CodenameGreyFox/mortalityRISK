@@ -36,13 +36,14 @@ _Figure 1: Conceptual workflow of mortalityRISK, detailing required dataset inpu
 ## Getting Started
 
 ### Prerequisites
-* **Java Runtime Environment (JRE):** Ensure Java 25 or later is available on your machine.
+* **Java Runtime Environment (JRE):** Ensure Java 25 or higher is available on your machine to run the .jar file.
 
 ### Installation
  No installation required, navigate to your local folder and run the standalone application executable by either double clicking the .jar file or running:
 ```bash
    java -jar mortalityRISK.jar
 ```
+Windows users can alternatively download the .zip file and, once extracted, run the executable file in the mortalityRISK folder. _This approach does not require Java._
 
 ---
 
