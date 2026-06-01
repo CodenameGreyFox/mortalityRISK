@@ -16,8 +16,7 @@ import net.miginfocom.swing.MigLayout;
 import java.awt.Toolkit;
 
 /**
- * Updated About Window for mortalityRISK v1.0.
- * Includes attributions for Apache, JFreeChart (LGPL), and MigLayout (BSD).
+ * About Window for mortalityRISK.
  */
 public class AboutDialog extends JDialog {
 
@@ -26,7 +25,7 @@ public class AboutDialog extends JDialog {
 	@SuppressWarnings("unused")
 	public AboutDialog(Frame owner) {
         super(owner, "About mortalityRISK", true);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(AboutDialog.class.getResource("/gui/Risky 16x16.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(AboutDialog.class.getResource("/resources/Risky 16x16.png")));
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
 
@@ -62,7 +61,7 @@ public class AboutDialog extends JDialog {
 
         String disclaimerText = "<html><div style='width: 330px; padding: 8px; font-family: Tahoma; font-size: 10px;'>" +
                 "<b>Legal Notice & Disclaimer:</b><br/>" +
-                "This software is provided “as is” without warranty of any kind."+
+                "This software is provided \"as is\" without warranty of any kind."+
                 "Simulation results depend on model assumptions and input data and should therefore be interpreted with caution." +
                 "The authors are not liable for consequences arising from its use.</div></html>";
 

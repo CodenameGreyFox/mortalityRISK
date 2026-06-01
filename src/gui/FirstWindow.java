@@ -53,6 +53,7 @@ public class FirstWindow {
 
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public FirstWindow() {
 		initialize();
