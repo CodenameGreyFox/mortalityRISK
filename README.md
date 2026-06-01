@@ -13,7 +13,7 @@ The tool includes an accessible, user-friendly Graphical User Interface (GUI) an
 
 ## Key Features
 
-* **Dual Modeling Environments:** Supports both **Spatially Explicit Mode** (incorporating grid-based metapopulation dynamics, and explicit animal dispersal) and **Spatially Implicit Mode** (assessing isolated populations for general demographic threshold analyses).
+* **Dual Modeling Modes:** Supports both **Spatially Explicit Mode** (incorporating grid-based metapopulation dynamics, and explicit animal dispersal) and **Spatially Implicit Mode** (assessing isolated populations for general demographic threshold analyses).
 * **Empirical Data Integration:** Directly incorporates real-world mortality survey data and localized infrastructure density to compute safe biological thresholds.
 * **Multi-Species Pipelines:** Simulates multiple species and alternative management or infrastructure development scenarios concurrently.
 * **Reproducible Workflows:** Execute simulations visually through the point-and-click GUI or run command-line scripts automated by the tool's built-in command string exporter.
