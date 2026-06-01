@@ -55,30 +55,38 @@
           </execution>
         </executions>
       </plugin>
-		<plugin>
-		    <groupId>org.panteleyev</groupId>
-		    <artifactId>jpackage-maven-plugin</artifactId>
-		    <version>1.7.4</version> 
-		    <configuration>
-		        <name>mortalityRISK</name>
-		        <type>APP_IMAGE</type> 
-		        <input>target</input>
-		        <appVersion>1.0.0</appVersion>
-		        <mainJar>${project.artifactId}-${project.version}-jar-with-dependencies.jar</mainJar>
-		        <mainClass>gui.FirstWindow</mainClass>
-		        <destination>target/dist</destination>
-		        <icon>src/resources/Risky.ico</icon>
-		    </configuration>
-		    <executions>
-		        <execution>
-		            <id>make-image</id>
-		            <phase>package</phase>
-		            <goals>
-		                <goal>jpackage</goal>
-		            </goals>
-		        </execution>
-		    </executions>
-      </plugin>
+	  <plugin>
+	    <groupId>org.panteleyev</groupId>
+	    <artifactId>jpackage-maven-plugin</artifactId>
+	    <version>1.7.4</version> 
+	    <configuration>
+	        <name>mortalityRISK</name>
+	        <type>APP_IMAGE</type> 
+	        
+	        <input>target</input>
+	        
+	        <appVersion>1.0.0</appVersion>
+	        
+	        <mainJar>mortalityRISK-1.0.0-SNAPSHOT-jar-with-dependencies.jar</mainJar>
+	        <mainClass>gui.FirstWindow</mainClass>
+	        <destination>target/dist</destination>
+	        
+	        <icon>${jpackage.icon}</icon>
+	        
+	        <modulePaths>
+	            <modulePath>target/mortalityRISK-1.0.0-SNAPSHOT-jar-with-dependencies.jar</modulePath>
+	        </modulePaths>
+	    </configuration>
+	    <executions>
+	        <execution>
+	            <id>make-image</id>
+	            <phase>package</phase>
+	            <goals>
+	                <goal>jpackage</goal>
+	            </goals>
+	        </execution>
+	    </executions>
+	</plugin>
     </plugins>
   </build>
   <dependencies>
@@ -119,5 +127,26 @@
         <scope>test</scope>
     </dependency>
 </dependencies>  
-  
+
+  <profiles>
+    <profile>
+        <id>windows-build</id>
+        <activation>
+            <os><family>windows</family></os>
+        </activation>
+        <properties>
+            <jpackage.icon>src/resources/Risky.ico</jpackage.icon>
+        </properties>
+    </profile>
+    <profile>
+        <id>linux-build</id>
+        <activation>
+            <os><family>unix</family></os>
+        </activation>
+        <properties>
+            <jpackage.icon>src/resources/Risky.png</jpackage.icon>
+        </properties>
+    </profile>
+    
+  </profiles>
 </project>
