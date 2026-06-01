@@ -1,53 +1,133 @@
-mortalityRISK v1.0
 
-Estimating the impact of infrastructure-induced mortality on wildlife populations.
-Overview
+<img src="src/resources/Logotipo-RISKY-Mortality - Even Smaller.png" alt="mortalityRISK">
 
-mortalityRISK is an open-source Java-based simulation tool designed to help researchers and conservationists model how roads and other infrastructure impact species survival. It supports both Spatial and Non-Spatial model types to accommodate different data availability and research goals.
-Authors
+# A Spatially Explicit Tool for Evaluating Wildlife Population Responses to Infrastructure-Induced Mortality
 
-    Neves T.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-    Clara G.
+**mortalityRISK** is an individual-based, multi-species, stochastic simulation framework built for Population Viability Analysis (PVA). It enables users to evaluate the long-term demographic and spatial consequences of infrastructure-induced wildlife mortality (e.g., roads, railways, power lines, and wind farms). 
 
-Key Features
+The tool includes an accessible, user-friendly Graphical User Interface (GUI) and is implemented in Java utilizing multithreaded programming to guarantee robust computational efficiency.
 
-    User-friendly Java Swing GUI for parameter input.
+---
 
-    Simulation of species response to mortality risks.
+## Key Features
 
-    Support for spatial mortality modeling.
+* **Dual Modeling Modes:** Supports both **Spatially Explicit Mode** (incorporating grid-based metapopulation dynamics, and explicit animal dispersal) and **Spatially Implicit Mode** (assessing isolated populations for general demographic threshold analyses).
+* **Empirical Data Integration:** Directly incorporates real-world mortality survey data and localized infrastructure density to compute safe biological thresholds.
+* **Multi-Species Pipelines:** Simulates multiple species and alternative management or infrastructure development scenarios concurrently.
+* **Reproducible Workflows:** Execute simulations visually through the point-and-click GUI or run command-line scripts automated by the tool's built-in command string exporter.
 
-    Exportable results for further scientific analysis.
+---
 
-Getting Started
-Prerequisites
+## Workflow Overview
+<p align="center">
+<img src="doc/ModelScheme.png" alt="mortalityRISK Workflow Diagram" width="500" align="center">
+</p>
 
-    Java Developer's Kit (JDK) 25 or higher.
+_Figure 1: Conceptual workflow of mortalityRISK, detailing required dataset inputs, internal interface processes, execution modes, and visual outputs._
 
-Installation & Usage
+---
 
-    Download the latest .jar file from the Releases page.
+## Getting Started
 
-    Run the application by double-clicking the JAR file or using the command line:
-    
-	java -jar mortalityRISK-v1.0.jar
+### Prerequisites
+* **Java Runtime Environment (JRE):** Ensure Java 25 or later is available on your machine.
 
-How to Cite
+### Installation
+ No installation required, navigate to your local folder and run the standalone application executable by either double clicking the .jar file or running:
+```bash
+   java -jar mortalityRISK.jar
+```
 
-If you use this software in your research, please cite it as follows:
+---
 
-    Neves, T., & Clara, G. (2026). mortalityRISK: A GUI tool for simulating infrastructure-induced wildlife mortality (Version 1.0). [Link to GitHub Repository]
+## Input Data Requirements
 
-License & Credits
+The simulation utilizes two primary input components:
 
-This project is open-source under the MIT License (see LICENSE).
-Third-Party Dependencies
+### 1. Demographic Spreadsheet (`.xlsx`)
+A setup sheet declaring explicit demographic parameters. Key parameters include:
+* **Infrastructure-Induced Mortality** (the actual observed mortality related to infrastructures)
+* **Life Phases** & **Survival Rate** (supports variations across distinct life stages and sexes).
+* **Longevity** & **Age at First Birth**.
+* **Reproductive Metrics** 
+* **Max Dispersal Length** & **Mate Finding Radius** (essential for spatial models).
+  _A template for this file, as well as detailed explanation of each parameter, can be accessed through the GUI_
 
-This software utilizes several open-source libraries. For full details on their licenses, please refer to the NOTICE file in the root directory.
+### 2. Georeferenced Spatial Layers (Spatially Explicit Mode Only)
+* **Species Distribution Layer:** A .asc raster setting the target grid dimensions and identifying currently occupied or potential colonization areas.
+* **Infrastructure Density Layer:** A .asc rasters identifying the infrastructure density in each cell (e.g., kilometers of roads, total wind turbine).
 
-    Apache Commons, POI, Log4j, XMLBeans (Apache 2.0)
+---
 
-    JFreeChart & JCommon (LGPL v2.1)
+## Command Line Interface (CLI) Execution
 
-    MigLayout (BSD 3-Clause)
+`mortalityRISK` can be executed headlessly via the command line for automated scripting, cluster environments, or high-throughput batch processing. The arguments must be provided in a strict sequential order depending on your simulation environment.
+_The command strings can be generated through the GUI._
+
+### 1. Spatially Explicit Mode (12 Arguments)
+When running a spatial simulation, provide the arguments in the following order:
+
+```bash
+java -jar mortalityRISK.jar <InputFile> <SpeciesFolder> <InfrastructureFile> <Iterations> <Repetitions> <ExtraScenarios> <MinPersistenceThreshold> <OutputFolder> <Cores> <InitialDate> <TimeUnit> <MaxProcessedIndividuals>
+```
+
+### 2. Spatially Implicit / Non-Spatial Mode (10 or 15 Arguments)
+
+When running a non-spatial model, you can choose between a Single Run (10 arguments) or a Parameter Sweep Sensitivity Analysis (15 arguments).
+**A. Single Run Configuration (10 Arguments)**
+```bash
+java -jar mortalityRISK.jar <InputFile> <InfrastructureDensity> <Iterations> <Repetitions> <ExtraScenarios> <OutputFolder> <Cores> <InitialDate> <TimeUnit> <MaxProcessedIndividuals>
+```
+
+**B. Senstivity Analysis Configuration (15 Arguments)**
+
+To perform a sensitivity analysis, append the related values to the command:
+```bash
+java -jar mortalityRISK.jar <InputFile> <InfrastructureDensity> <Iterations> <Repetitions> <ExtraScenarios> <OutputFolder> <Cores> <InitialDate> <TimeUnit> <MaxProcessedIndividuals> <SweepInitialValue> <SweepFinalValue> <SweepInfrastructureMortality> <SweepResolution> <ScaleSweepMortalityToYearly>
+```
+---
+
+> [!TIP]
+> ### 📋 Model Parameter Guide
+> For a comprehensive, detailed breakdown of all parameters in `mortalityRISK` and the CLI arguments, please refer to the **[Parameter Reference Guide](./doc/PARAMETERS.md)**.
+
+---
+
+## Exported Outputs
+
+The program saves analytical tables and graphical visualizations out-of-the-box:
+* **Population Time Series:** Clear CSV logs and data plots detailing total animal counts over time alongside 95% confidence intervals across stochastic iterations.
+* **Overall Extinction Risk:** A comparative visual layout mapping species persistence levels across diverse infrastructure scenarios.
+* **Persistence Map (`.asc` raster):** Cell-by-cell spatial grids mapping the probability that local subpopulations persist across simulation repetitions.
+* **Mortality Threshold Graphs (Implicit Mode):** Sensitivity diagnostics pointing out the exact mortality boundaries that provoke abrupt population collapses.
+
+---
+
+## Authors
+
+* **Tomé Neves** (Code Development & Conceptualization) — CIBIO, Centro de Investigação em Biodiversidade e Recursos Genéticos, Universidade do Porto / Universidade de Lisboa.
+* **Clara Grilo** (Conceptualization) — CIBIO, Centro de Investigação em Biodiversidade e Recursos Genéticos, Universidade do Porto / Universidade de Lisboa.
+
+### Project Acknowledgements
+`mortalityRISK` was conceptualized within the framework of project **RISKY** (Wildlife Mortality from Energy and Transport Infrastructure - 03-55-RISKY). It was supported through funding from **OSCARS** via the European Commission’s Horizon Europe Research and Innovation Programme (grant agreement No. 101129751).
+
+---
+
+## License
+
+This project is licensed under the **MIT License**. You are free to modify, distribute, and implement this framework in downstream applications provided proper author attribution remains intact.
+
+### Third-Party Java Libraries Bundled
+* **Apache Commons, Log4j2, POI, XMLBeans** (Licensed under Apache License 2.0)
+* **MigLayout** (Licensed under BSD 3-Clause License)
+* **JFreeChart & JCommon** (Licensed under LGPL v2.1)
+
+---
+
+## Citation
+
+When using `mortalityRISK` or citing the theoretical modeling framework, please reference our main article:
+
+> Neves, T., & Grilo, C. (2026). mortalityRISK: a spatially explicit tool for evaluating wildlife population responses to infrastructure-induced mortality. *Journal TBD*. (In Press / Citation Details Pending).
