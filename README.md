@@ -42,6 +42,25 @@ _Figure 1: Conceptual workflow of mortalityRISK, detailing required dataset inpu
 
 ---
 
+## Input Data Requirements
+
+The simulation utilizes two primary input components:
+
+### 1. Demographic Spreadsheet (`.xlsx`)
+A setup sheet declaring explicit demographic parameters. Key parameters include:
+* **Infrastructure-Induced Mortality** (the actual observed mortality related to infrastructures)
+* **Life Phases** & **Survival Rate** (supports variations across distinct life stages and sexes).
+* **Longevity** & **Age at First Birth**.
+* **Reproductive Metrics** 
+* **Max Dispersal Length** & **Mate Finding Radius** (essential for spatial models).
+  _A template for this file, as well as detailed explanation of each parameter, can be accessed through the GUI_
+
+### 2. Georeferenced Spatial Layers (Spatially Explicit Mode Only)
+* **Species Distribution Layer:** A .asc raster setting the target grid dimensions and identifying currently occupied or potential colonization areas.
+* **Infrastructure Density Layer:** A .asc rasters identifying the infrastructure density in each cell (e.g., kilometers of roads, total wind turbine).
+
+---
+
 ## Command Line Interface (CLI) Execution
 
 `mortalityRISK` can be executed headlessly via the command line for automated scripting, cluster environments, or high-throughput batch processing. The arguments must be provided in a strict sequential order depending on your simulation environment.
@@ -70,22 +89,9 @@ java -jar mortalityRISK.jar <InputFile> <InfrastructureDensity> <Iterations> <Re
 ```
 ---
 
-## Input Data Requirements
-
-The simulation utilizes two primary input components:
-
-### 1. Demographic Spreadsheet (`.xlsx`)
-A setup sheet declaring explicit demographic parameters. Key parameters include:
-* **Infrastructure-Induced Mortality** (the actual observed mortality related to infrastructures)
-* **Life Phases** & **Survival Rate** (supports variations across distinct life stages and sexes).
-* **Longevity** & **Age at First Birth**.
-* **Reproductive Metrics** 
-* **Max Dispersal Length** & **Mate Finding Radius** (essential for spatial models).
-  _A template for this file, as well as detailed explanation of each parameter, can be accessed through the GUI_
-
-### 2. Georeferenced Spatial Layers (Spatially Explicit Mode Only)
-* **Species Distribution Layer:** A .asc raster setting the target grid dimensions and identifying currently occupied or potential colonization areas.
-* **Infrastructure Density Layer:** A .asc rasters identifying the infrastructure density in each cell (e.g., kilometers of roads, total wind turbine).
+> [!TIP]
+> ### 📋 Model Parameter Guide
+> For a comprehensive, detailed breakdown of all parameters in `mortalityRISK` and the CLI arguments, please refer to the **[Parameter Reference Guide](./doc/PARAMETERS.md)**.
 
 ---
 
