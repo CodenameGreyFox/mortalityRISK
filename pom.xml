@@ -55,6 +55,30 @@
           </execution>
         </executions>
       </plugin>
+		<plugin>
+		    <groupId>org.panteleyev</groupId>
+		    <artifactId>jpackage-maven-plugin</artifactId>
+		    <version>1.7.4</version> 
+		    <configuration>
+		        <name>mortalityRISK</name>
+		        <type>APP_IMAGE</type> 
+		        <input>target</input>
+		        <appVersion>1.0.0</appVersion>
+		        <mainJar>${project.artifactId}-${project.version}-jar-with-dependencies.jar</mainJar>
+		        <mainClass>gui.FirstWindow</mainClass>
+		        <destination>target/dist</destination>
+		        <icon>src/resources/Risky.ico</icon>
+		    </configuration>
+		    <executions>
+		        <execution>
+		            <id>make-image</id>
+		            <phase>package</phase>
+		            <goals>
+		                <goal>jpackage</goal>
+		            </goals>
+		        </execution>
+		    </executions>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
