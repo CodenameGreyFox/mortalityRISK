@@ -1,4 +1,7 @@
-# mortalityRISK: A Spatially Explicit Tool for Evaluating Wildlife Population Responses to Infrastructure-Induced Mortality
+
+<img src="src/resources/Logotipo-RISKY-Mortality - Even Smaller.png" alt="mortalityRISK">
+
+# A Spatially Explicit Tool for Evaluating Wildlife Population Responses to Infrastructure-Induced Mortality
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -18,8 +21,9 @@ The tool includes an accessible, user-friendly Graphical User Interface (GUI) an
 ---
 
 ## Workflow Overview
-
-<img src="doc/ModelScheme.png" alt="mortalityRISK Workflow Diagram" width="500">
+<p align="center">
+<img src="doc/ModelScheme.png" alt="mortalityRISK Workflow Diagram" width="500" align="center">
+</p>
 
 _Figure 1: Conceptual workflow of mortalityRISK, detailing required dataset inputs, internal interface processes, execution modes, and visual outputs._
 
@@ -32,9 +36,39 @@ _Figure 1: Conceptual workflow of mortalityRISK, detailing required dataset inpu
 
 ### Installation
  No installation required, navigate to your local folder and run the standalone application executable by either double clicking the .jar file or running:
-```
+```bash
    java -jar mortalityRISK.jar
 ```
+
+---
+
+## Command Line Interface (CLI) Execution
+
+`mortalityRISK` can be executed headlessly via the command line for automated scripting, cluster environments, or high-throughput batch processing. The arguments must be provided in a strict sequential order depending on your simulation environment.
+_The command strings can be generated through the GUI._
+
+### 1. Spatially Explicit Mode (12 Arguments)
+When running a spatial simulation, provide the arguments in the following order:
+
+```bash
+java -jar mortalityRISK.jar <InputFile> <SpeciesFolder> <InfrastructureFile> <Iterations> <Repetitions> <ExtraScenarios> <MinPersistenceThreshold> <OutputFolder> <Cores> <InitialDate> <TimeUnit> <MaxProcessedIndividuals>
+```
+
+### 2. Spatially Implicit / Non-Spatial Mode (10 or 15 Arguments)
+
+When running a non-spatial model, you can choose between a Single Run (10 arguments) or a Parameter Sweep Sensitivity Analysis (15 arguments).
+**A. Single Run Configuration (10 Arguments)**
+```bash
+java -jar mortalityRISK.jar <InputFile> <InfrastructureDensity> <Iterations> <Repetitions> <ExtraScenarios> <OutputFolder> <Cores> <InitialDate> <TimeUnit> <MaxProcessedIndividuals>
+```
+
+**B. Senstivity Analysis Configuration (15 Arguments)**
+
+To perform a sensitivity analysis, append the related values to the command:
+```bash
+java -jar mortalityRISK.jar <InputFile> <InfrastructureDensity> <Iterations> <Repetitions> <ExtraScenarios> <OutputFolder> <Cores> <InitialDate> <TimeUnit> <MaxProcessedIndividuals> <SweepInitialValue> <SweepFinalValue> <SweepInfrastructureMortality> <SweepResolution> <ScaleSweepMortalityToYearly>
+```
+---
 
 ## Input Data Requirements
 
@@ -47,6 +81,7 @@ A setup sheet declaring explicit demographic parameters. Key parameters include:
 * **Longevity** & **Age at First Birth**.
 * **Reproductive Metrics** 
 * **Max Dispersal Length** & **Mate Finding Radius** (essential for spatial models).
+  _A template for this file, as well as detailed explanation of each parameter, can be accessed through the GUI_
 
 ### 2. Georeferenced Spatial Layers (Spatially Explicit Mode Only)
 * **Species Distribution Layer:** A .asc raster setting the target grid dimensions and identifying currently occupied or potential colonization areas.
@@ -64,7 +99,7 @@ The program saves analytical tables and graphical visualizations out-of-the-box:
 
 ---
 
-## Developers & Authors
+## Authors
 
 * **Tomé Neves** (Code Development & Conceptualization) — CIBIO, Centro de Investigação em Biodiversidade e Recursos Genéticos, Universidade do Porto / Universidade de Lisboa.
 * **Clara Grilo** (Conceptualization) — CIBIO, Centro de Investigação em Biodiversidade e Recursos Genéticos, Universidade do Porto / Universidade de Lisboa.
