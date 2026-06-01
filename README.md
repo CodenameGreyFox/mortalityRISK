@@ -5,6 +5,10 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+> [!IMPORTANT]
+> ### Download the latest mortalityRISK release here!
+> [![Latest Release](https://img.shields.io/badge/Release-v0.1.0--alpha-blue)](https://github.com/CodenameGreyFox/mortalityRISK/releases)
+
 **mortalityRISK** is an individual-based, multi-species, stochastic simulation framework built for Population Viability Analysis (PVA). It enables users to evaluate the long-term demographic and spatial consequences of infrastructure-induced wildlife mortality (e.g., roads, railways, power lines, and wind farms). 
 
 The tool includes an accessible, user-friendly Graphical User Interface (GUI) and is implemented in Java utilizing multithreaded programming to guarantee robust computational efficiency.
