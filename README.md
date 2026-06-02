@@ -58,12 +58,14 @@ A setup sheet declaring explicit demographic parameters. Key parameters include:
 * **Longevity** & **Age at First Birth**.
 * **Reproductive Metrics** 
 * **Max Dispersal Length** & **Mate Finding Radius** (essential for spatial models).
+  
   _A template for this file, as well as detailed explanation of each parameter, can be accessed through the GUI_
 
 ### 2. Georeferenced Spatial Layers (Spatially Explicit Mode Only)
 * **Species Distribution Layer:** A .asc raster setting the target grid dimensions and identifying currently occupied or potential colonization areas.
 * **Infrastructure Density Layer:** A .asc rasters identifying the infrastructure density in each cell (e.g., kilometers of roads, total wind turbine).
-
+> [!TIP]
+>A set of sample input files is available [here](https://github.com/CodenameGreyFox/mortalityRISK/tree/main/doc/Sample%20Input%20Files).
 ---
 
 ## Command Line Interface (CLI) Execution
