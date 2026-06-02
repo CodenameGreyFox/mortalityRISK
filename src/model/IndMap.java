@@ -33,11 +33,11 @@ public class IndMap {
 	long[] activeCells; //A set of active cells, to avoid wasting time looking into nodata cells, stored through bit trickery
 
 	/**
-	 * Constructor that receives an .asc file location and transforms it into a two dimensional array to be read.
+	 * Constructor that receives an .asc file location and transforms it into a two dimensional array to be read. (Currently unused)
 	 *
 	 * @param ascFile File Location of .asc file to be read.
 	 */
-	public IndMap(File ascFile) throws IOException {
+	/* public IndMap(File ascFile) throws IOException {
 
 		BufferedReader asc = new BufferedReader(new FileReader(ascFile));
 		String temp;
@@ -138,7 +138,7 @@ public class IndMap {
 
 		initializeActiveCells(tempActiveCells);
 		this.map = mapa;
-	}
+	} */ 
 
 	/**
 	 * Constructor that receives a Map and transforms it into an IndMap.
@@ -170,7 +170,8 @@ public class IndMap {
 					mapa[col][row] = null;
 				} else {
 					mapa[col][row] = new ArrayList<>();
-					mapa[col][row].add(new Individual(0, new int[] {0}, 0.5, new double[] {this.getLon(col),this.getLat(row)}));
+					if (oldMap.getValue(col, row)>0) //Only adds individual if value above 0
+						mapa[col][row].add(new Individual(0, new int[] {0}, 0.5, new double[] {this.getLon(col),this.getLat(row)}));
 					tempActiveCells.add(getCellKey(col,row));
 				}
 			}

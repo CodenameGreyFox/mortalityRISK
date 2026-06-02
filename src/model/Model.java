@@ -269,10 +269,16 @@ public class Model {
 						double nIndividuals; 
 
 
-						pop[species].killAllIndividuals(x,y);
 						if (spatial) {
 
-							nIndividuals = populationDensity[species] * pop[species].getSqKMeters(x, y);							
+							//If there are no individuals, do not add individuals to that cell
+							if (pop[species].getCount(x, y)==0) {
+								nIndividuals = 0;
+							} else {
+								pop[species].killAllIndividuals(x,y);
+								nIndividuals = populationDensity[species] * pop[species].getSqKMeters(x, y);
+							}
+
 							maxPopulationDensity[species][x][y] = maxPopulation[species] * pop[species].getSqKMeters(x, y);
 
 
@@ -305,6 +311,7 @@ public class Model {
 								pop[species].addRandomIndividuals((int)nIndividuals,currentStep, lifePhases[species], minTimeBetweenBreeding[species], matAge[species], litSz,avgTimeBetweenBreeding[species] , sexRatio[species],x, y);
 							}
 						} else { //if not spatial
+							pop[species].killAllIndividuals(x,y);
 
 							nIndividuals = startPopValue[species];
 
@@ -1210,4 +1217,13 @@ public class Model {
 	        throw new Exception("Out of Memory: Simulation aborted.");
 	    }
 	}
+	
+	/**
+	 * Returns the population map of the specified species
+	 */
+	
+	public IndMap getPopulationMap(int species) {
+		return pop[species];
+	}
 }
+
