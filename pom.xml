@@ -67,14 +67,14 @@
 	        
 	        <appVersion>1.0.0</appVersion>
 	        
-	        <mainJar>mortalityRISK-1.0.0-with-dependencies.jar</mainJar>
+	        <mainJar>mortalityRISK-1.0.0-jar-with-dependencies.jar</mainJar>
 	        <mainClass>gui.FirstWindow</mainClass>
 	        <destination>target/dist</destination>
 	        
 	        <icon>${jpackage.icon}</icon>
 	        
 	        <modulePaths>
-	            <modulePath>target/mortalityRISK-1.0.0-with-dependencies.jar</modulePath>
+	            <modulePath>target/mortalityRISK-1.0.0-jar-with-dependencies.jar</modulePath>
 	        </modulePaths>
 	        <javaOptions>
             <option>-XX:MaxRAMPercentage=75.0</option>
