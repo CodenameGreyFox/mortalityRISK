@@ -225,24 +225,24 @@ public class NoGUI {
 
 				try { //Sets up the model with the chosen parameters, if able
 					model = new Model( modelParameters, infrastructureDensity,numberOfRoadVariations , numberOfCores, maxProcInd);
+
+
+					int cutNumber = 0;
+					while (cutNumber < itToRun.length) { //Runs the model, stopping at each needed section to save 
+						int modifier = 0;
+						if (cutNumber != 0) {
+							modifier = itToRun[cutNumber-1];
+						}
+						model.run(itToRun[cutNumber]-modifier);
+						resultsExtinctionRepeated[cutNumber][i+sweepN*numberOfRepetitions] = model.getExtinction(); //Saves the map
+						cutNumber ++;
+					}
+
+					resultsRepeated[i+sweepN*numberOfRepetitions] = model.getTextRowToSaveToCSV();
 				} catch (Exception e) {
 					e.printStackTrace();
 					return;
 				}
-
-				int cutNumber = 0;
-				while (cutNumber < itToRun.length) { //Runs the model, stopping at each needed section to save 
-					int modifier = 0;
-					if (cutNumber != 0) {
-						modifier = itToRun[cutNumber-1];
-					}
-					model.run(itToRun[cutNumber]-modifier);
-					resultsExtinctionRepeated[cutNumber][i+sweepN*numberOfRepetitions] = model.getExtinction(); //Saves the map
-					cutNumber ++;
-				}
-
-				resultsRepeated[i+sweepN*numberOfRepetitions] = model.getTextRowToSaveToCSV();
-
 				//Estimates time left
 				currentTime = System.currentTimeMillis();
 				long elapsedTime = currentTime-startTime;
@@ -265,7 +265,7 @@ public class NoGUI {
 
 		OutputProcessor.process(resultsRepeated,resultsExtinctionRepeated,model.getRoadMortality() ,txtOutputLocation, model.getSpeciesNames(), "NonSpatial", 0.5,numberOfRoadVariations,
 				modelParameters,txtYyyymmdd, TimeUnit, sweepMortalityCheck?(sweepResolution):1, (double) sweepResolutionMin, (double) sweepResolutionMax,itToRun , numberOfRepetitions,generateCommand("NonSpatial"));
-		
+
 
 	}
 
@@ -335,6 +335,20 @@ public class NoGUI {
 					}
 					model = new Model( modelParameters, initialPopulation,roadMap, numberOfRoadVariations , numberOfCores,maxProcInd);
 
+
+
+					//Runs in sections and stores the values
+					int cutNumber = 0;
+					while (cutNumber < itToRun.length) {
+						int modifier = 0;
+						if (cutNumber != 0) {
+							modifier = itToRun[cutNumber-1];
+						}
+						model.run(itToRun[cutNumber]-modifier);
+						resultsExtinctionRepeated[cutNumber][i+sweepN*(numberOfRepetitions)] = model.getExtinction();
+
+						cutNumber ++;
+					}
 				} catch (NumberFormatException e) {
 					e.printStackTrace();
 					break;
@@ -343,20 +357,6 @@ public class NoGUI {
 					e.printStackTrace();
 					break;
 				}
-
-				//Runs in sections and stores the values
-				int cutNumber = 0;
-				while (cutNumber < itToRun.length) {
-					int modifier = 0;
-					if (cutNumber != 0) {
-						modifier = itToRun[cutNumber-1];
-					}
-					model.run(itToRun[cutNumber]-modifier);
-					resultsExtinctionRepeated[cutNumber][i+sweepN*(numberOfRepetitions)] = model.getExtinction();
-
-					cutNumber ++;
-				}
-
 				//Saves results
 				resultsRepeated[i+sweepN*(numberOfRepetitions)] = model.getTextRowToSaveToCSV();
 
@@ -372,8 +372,8 @@ public class NoGUI {
 
 		OutputProcessor.process(resultsRepeated,resultsExtinctionRepeated,model.getRoadMortality() ,txtOutputLocation, model.getSpeciesNames(), "Spatial", minPersistenceThreshold,numberOfRoadVariations,
 				modelParameters,txtYyyymmdd, TimeUnit, 1, 0, 0, itToRun , numberOfRepetitions,generateCommand("Spatial"));
-		
-		
+
+
 
 	}
 
@@ -471,7 +471,7 @@ public class NoGUI {
 				"Parameters.xlsx" + " ";
 		if (type.contentEquals("Spatial")) 
 			command += "\""+txtInitialPopulationLocation.replace("\\", "/") + "\" " + 
-					 "\""+txtRoadFileLocation.replace("\\", "/") + "\" ";
+					"\""+txtRoadFileLocation.replace("\\", "/") + "\" ";
 		else
 			command += infrastructureDensity + " ";
 		command += iterationsToRun + " " +
@@ -491,9 +491,9 @@ public class NoGUI {
 					sweepResolution+	 " " +	
 					Boolean.toString(scaleToYear);
 		}
-		
+
 		return command;
-		
+
 	}
 
 

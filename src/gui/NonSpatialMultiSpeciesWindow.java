@@ -647,48 +647,49 @@ public class NonSpatialMultiSpeciesWindow implements PropertyChangeListener {
 
 						try { //Sets up the model with the chosen parameters, if able
 							model = new Model( modelParameters, Double.parseDouble(textFieldInfraDensity.getText()),(int) numberOfRoadVariations.getValue() ,(int) numberOfCores.getValue(), (int) maxProcInd.getValue());
+
+
+							int cutNumber = 0;
+							while (cutNumber < itToRun.length) { //Runs the model, stopping at each needed section to save 
+								int modifier = 0;
+								if (cutNumber != 0) {
+									modifier = itToRun[cutNumber-1];
+								}
+								model.run(itToRun[cutNumber]-modifier);
+								resultsExtinctionRepeated[cutNumber][i+sweepN*((int)numberOfRepetitions.getValue())] = model.getExtinction(); //Saves the map
+								cutNumber ++;
+							}
+
+
+							if (sweepMortalityCheck.isSelected()) {
+								lblCurrentIterationValue.setText((i+1) + " - " + (sweepN+1));
+							} else {
+								lblCurrentIterationValue.setText((i+1)+"");
+							}
+
+							resultsRepeated[i+sweepN*((int)numberOfRepetitions.getValue())] = model.getTextRowToSaveToCSV();
+
+							//Estimates time left
+							currentTime = System.currentTimeMillis();
+							long elapsedTime = currentTime-startTime;
+							long expectedTime =elapsedTime/((i+1)+((sweepN)*(int)numberOfRepetitions.getValue()))*(int)numberOfRepetitions.getValue()*sweepRes;
+							double seconds = (expectedTime-elapsedTime)/1000.0;
+							if (seconds > 60) {
+								double minutes = seconds/60.0;			
+								if (minutes > 60) {
+									double hours = minutes/60.0;
+									lblEstimatedTime.setText("Time Left: " +(int)Math.ceil(hours) + " h");
+
+								} else {
+									lblEstimatedTime.setText("Time Left: " +(int)Math.ceil(minutes) + " m");
+								}
+							} else {
+								lblEstimatedTime.setText("Time Left: " +(int)Math.ceil(seconds) + " s");
+							}
 						} catch (Exception e) {
 							e.printStackTrace();
 							progressBar.setString(e.getMessage());
 							return null;
-						}
-
-						int cutNumber = 0;
-						while (cutNumber < itToRun.length) { //Runs the model, stopping at each needed section to save 
-							int modifier = 0;
-							if (cutNumber != 0) {
-								modifier = itToRun[cutNumber-1];
-							}
-							model.run(itToRun[cutNumber]-modifier);
-							resultsExtinctionRepeated[cutNumber][i+sweepN*((int)numberOfRepetitions.getValue())] = model.getExtinction(); //Saves the map
-							cutNumber ++;
-						}
-
-
-						if (sweepMortalityCheck.isSelected()) {
-							lblCurrentIterationValue.setText((i+1) + " - " + (sweepN+1));
-						} else {
-							lblCurrentIterationValue.setText((i+1)+"");
-						}
-
-						resultsRepeated[i+sweepN*((int)numberOfRepetitions.getValue())] = model.getTextRowToSaveToCSV();
-
-						//Estimates time left
-						currentTime = System.currentTimeMillis();
-						long elapsedTime = currentTime-startTime;
-						long expectedTime =elapsedTime/((i+1)+((sweepN)*(int)numberOfRepetitions.getValue()))*(int)numberOfRepetitions.getValue()*sweepRes;
-						double seconds = (expectedTime-elapsedTime)/1000.0;
-						if (seconds > 60) {
-							double minutes = seconds/60.0;			
-							if (minutes > 60) {
-								double hours = minutes/60.0;
-								lblEstimatedTime.setText("Time Left: " +(int)Math.ceil(hours) + " h");
-
-							} else {
-								lblEstimatedTime.setText("Time Left: " +(int)Math.ceil(minutes) + " m");
-							}
-						} else {
-							lblEstimatedTime.setText("Time Left: " +(int)Math.ceil(seconds) + " s");
 						}
 					}
 				}

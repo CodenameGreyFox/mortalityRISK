@@ -76,6 +76,9 @@
 	        <modulePaths>
 	            <modulePath>target/mortalityRISK-1.0.0-SNAPSHOT-jar-with-dependencies.jar</modulePath>
 	        </modulePaths>
+	        <javaOptions>
+            <option>-XX:MaxRAMPercentage=75.0</option>
+        </javaOptions>
 	    </configuration>
 	    <executions>
 	        <execution>

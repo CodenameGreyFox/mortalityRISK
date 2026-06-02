@@ -565,6 +565,27 @@ public class SpatialMultiSpeciesWindow implements PropertyChangeListener {
 							//Sets up the model with the chosen parameters
 							model = new Model( modelParameters, initialPopulation,roadMap, (int)numberOfRoadVariations.getValue() ,(int)numberOfCores.getValue(),(int)maxProcInd.getValue());
 
+
+							//Runs in sections and stores the values
+							int cutNumber = 0;
+							while (cutNumber < itToRun.length) {
+								int modifier = 0;
+								if (cutNumber != 0) {
+									modifier = itToRun[cutNumber-1];
+								}
+								model.run(itToRun[cutNumber]-modifier);
+								resultsExtinctionRepeated[cutNumber][i+sweepN*((int)numberOfRepetitions.getValue())] = model.getExtinction();
+
+								cutNumber ++;
+							}
+
+							lblCurrentIterationValue.setText((i+1)+"");
+
+							resultsRepeated[i+sweepN*((int)numberOfRepetitions.getValue())] = model.getTextRowToSaveToCSV();
+
+							//Estimates time left
+							predictTime( startTime,   i,  sweepN, sweepRes);
+							
 						} catch (NumberFormatException e) {
 							btnRunModel.setText("Run Model");
 							progressBar.setString(e.getMessage());
@@ -580,25 +601,6 @@ public class SpatialMultiSpeciesWindow implements PropertyChangeListener {
 							break ModelLoop;
 						}
 
-						//Runs in sections and stores the values
-						int cutNumber = 0;
-						while (cutNumber < itToRun.length) {
-							int modifier = 0;
-							if (cutNumber != 0) {
-								modifier = itToRun[cutNumber-1];
-							}
-							model.run(itToRun[cutNumber]-modifier);
-							resultsExtinctionRepeated[cutNumber][i+sweepN*((int)numberOfRepetitions.getValue())] = model.getExtinction();
-
-							cutNumber ++;
-						}
-
-						lblCurrentIterationValue.setText((i+1)+"");
-
-						resultsRepeated[i+sweepN*((int)numberOfRepetitions.getValue())] = model.getTextRowToSaveToCSV();
-
-						//Estimates time left
-						predictTime( startTime,   i,  sweepN, sweepRes);
 
 
 					}
@@ -800,4 +802,7 @@ public class SpatialMultiSpeciesWindow implements PropertyChangeListener {
 
 		return command;
 	}
+	
+	
+	
 }

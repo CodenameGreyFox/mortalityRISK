@@ -127,18 +127,18 @@ public class OutputProcessor {
 			resultsFolder.mkdir();
 
 			try {
-				parameters.saveToFile(resultsFolder.toString()+"\\Parameters.xlsx",type);
+				parameters.saveToFile(Path.of(resultsFolder.toString(),"Parameters.xlsx").toString(),type);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}	
 
 			if (sweepRes >1) {
-				processSweep(resultsRepeated, resultsFolder.toString()+"\\", speciesNames, nRoadVariations, date, timeUnit, sweepRes, sweepMin, sweepMax, iterations[cut] );
+				processSweep(resultsRepeated, resultsFolder.toString(), speciesNames, nRoadVariations, date, timeUnit, sweepRes, sweepMin, sweepMax, iterations[cut] );
 			} else {
-				processData(resultsRepeated, resultsFolder.toString()+"\\", speciesNames, nRoadVariations, date, timeUnit, iterations[cut] );
+				processData(resultsRepeated, resultsFolder.toString(), speciesNames, nRoadVariations, date, timeUnit, iterations[cut] );
 			}
 			if(type.contentEquals("Spatial")) {
-				processMaps( resultsExtinctionRepeated[cut],roadMortality ,resultsFolder.toString()+"\\", speciesNames, minPersistenceThreshold ,nRoadVariations);
+				processMaps( resultsExtinctionRepeated[cut],roadMortality ,resultsFolder.toString(), speciesNames, minPersistenceThreshold ,nRoadVariations);
 			}
 		}
 	}

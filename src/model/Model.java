@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import javax.script.ScriptException;
 
@@ -160,13 +161,11 @@ public class Model {
 
 	/**
 	 * Private method to initialize the populations.
+	 * @throws Exception 
 	 * 
 	 */
 
-
-	//Process Births and Deaths
-
-	private void runParallelInitialization() throws InterruptedException {
+	private void runParallelInitialization() throws Exception {
 		ExecutorService executor = Executors.newFixedThreadPool(nCores);
 		List<Callable<Void>> initTasks = new ArrayList<>();
 		for (int core = 0; core < nCores; core++) {
@@ -176,17 +175,32 @@ public class Model {
 					new processInitPop(c).run();
 				} catch (Throwable t) {
 					System.err.println("Error in core " + c + ": " + t.getMessage());
-					t.printStackTrace();
+					throw t;
 				}
 				return null;
 			});
 		}
 
-		try {
-			executor.invokeAll(initTasks);
-		} finally {
-			executor.shutdown(); 
-		}
+		List<Future<Void>> futures = null;
+	    try {
+	        futures = executor.invokeAll(initTasks); 
+	        
+	        //If any core failed, .get() will throw an ExecutionException
+	        for (Future<Void> future : futures) {
+	            future.get(); 
+	        }
+	        
+	    } catch (java.util.concurrent.ExecutionException e) {
+
+	    	Throwable myCustomException = e.getCause();
+	        
+	        // Pass the message up to the GUI
+	        throw new Exception(myCustomException.getMessage(), myCustomException);
+	        
+	    } finally {
+	        // 4. Clean up: physically shut down the threads
+	        executor.shutdownNow(); 
+	    }
 
 		//Stores the population size in the first step
 		for (int s = 0; s < pop.length; s++) {
@@ -225,11 +239,22 @@ public class Model {
 					avgnIndividuals = populationDensity[species] * pop[species].calculateAvgCellSize();
 				}
 
+				int pixelCounter= 0;
 				//If spatial initalizes maximum population and starting population for each cell, as area changes				
 				//Runs through cells again for initializing
 				for (int x = 0; x < pop[species].getNcols(); x++) {
 					for(int y = 0; y < pop[species].getNrows(); y++) {
 
+						//RAM check
+						pixelCounter++;
+						if (pixelCounter % 1000 == 0) {
+							try {
+								checkMemorySafety();
+							} catch (Exception e) {
+								throw new RuntimeException(e.getMessage(), e);
+							}
+						}
+						
 						//Gets the road coordinates to calculate roadkill
 						int roadCol = env.getLonCol(pop[species].getLon(x));
 						int roadRow = env.getLatRow(pop[species].getLat(y));
@@ -254,7 +279,11 @@ public class Model {
 							//Mortality in each cell is based on the initial proportion of individuals killed there with the observed roadkill
 							//Important, the number of individuals is considered constant throughout all cells (even those that start with no individuals).
 							//Based on a constant hazard rate model derived from a continuous-time Poisson process.
-							mortalityPerCell[species][x][y]= 1-Math.pow(Math.E,-(absoluteRoadkillPerKmPerYear[species]*env.getValue(roadCol, roadRow))/avgnIndividuals);
+							try {
+								mortalityPerCell[species][x][y]= 1-Math.pow(Math.E,-(absoluteRoadkillPerKmPerYear[species]*env.getValue(roadCol, roadRow))/avgnIndividuals);
+							} catch (ArrayIndexOutOfBoundsException e) {
+								throw new RuntimeException("The infr. raster is smaller than the species'.", e);
+							}
 
 
 							if (maxProcessedIndividuals > 0 && nIndividuals > maxProcessedIndividuals) {
@@ -372,13 +401,15 @@ public class Model {
 	 *  Makes the model perform one or more steps.
 	 *
 	 * @param nSteps int Number of steps to perform
+	 * @throws Exception 
 	 * @throws ScriptException
 	 */
 
-	public void run(int nSteps) {
+	public void run(int nSteps) throws Exception {
 		ExecutorService executor = Executors.newFixedThreadPool(nCores);
 
-		for (int step = 0; step < nSteps; step++) {			
+		for (int step = 0; step < nSteps; step++) {
+			checkMemorySafety();
 			currentStep ++;
 
 			//Checks for cancellation
@@ -425,7 +456,7 @@ public class Model {
 							new processMigrations(c, disRan).run();
 						} catch (Throwable t) {
 							System.err.println("Error in core " + c + ": " + t.getMessage());
-							t.printStackTrace();
+							throw t;
 						}
 						return null;
 					});
@@ -616,7 +647,7 @@ public class Model {
 				for (long cell : pop[species].getOccupiedCells()) {
 					int x= IndMap.getXFromCellKey(cell);
 					int y= IndMap.getYFromCellKey(cell);
-					
+
 					newBorns = 0;
 
 					//Randomly defines if birth or mortality comes first
@@ -789,7 +820,7 @@ public class Model {
 				for (long cell : pop[species].getOccupiedCells()) {
 					int x= IndMap.getXFromCellKey(cell);
 					int y= IndMap.getYFromCellKey(cell);
-					
+
 
 					for (int movingInd = 0; movingInd < pop[species].getCount(x,y); movingInd++) {
 						//Provided dispersalRange is in meters
@@ -932,7 +963,7 @@ public class Model {
 	/**
 	 * Prints out all parameters (currently not in use)
 	 */
-/**
+	/**
 	public void printParameters() {
 
 		for (int species = 0; species < speciesNames.length; species++) {
@@ -1010,17 +1041,17 @@ public class Model {
 
 	/**
 	 * Returns a deep clone of the model
-	
+
 
 	public Model clone() {
 		return new Model(this);		
 	}
- */
+	 */
 
 	/**
 	 * Private method to clone model
 	 * @param model
-	
+
 	@SuppressWarnings("unchecked")
 	private Model(Model model) {
 
@@ -1151,7 +1182,7 @@ public class Model {
 		currentStep = model.currentStep;
 
 	}
- */
+	 */
 	/**
 	 * Returns the population size per step for testing purposes
 	 * @param speciesIndex
@@ -1161,4 +1192,22 @@ public class Model {
 		return this.popSizePerStep[speciesIndex];
 	}
 
+	
+	/**
+	 * Avoids memory crashes
+	 * @throws Exception
+	 */
+	public void checkMemorySafety() throws Exception {
+	    Runtime runtime = Runtime.getRuntime();
+	    long maxMemory = runtime.maxMemory();
+	    long allocatedMemory = runtime.totalMemory();
+	    long freeMemory = runtime.freeMemory();
+	    
+	    long totalFreeMemory = freeMemory + (maxMemory - allocatedMemory);
+	    	    
+	    // If less than 500 Megabytes of RAM remain, abort safely
+	    if (totalFreeMemory < 250 * 1024 * 1024) { 
+	        throw new Exception("Out of Memory: Simulation aborted.");
+	    }
+	}
 }
