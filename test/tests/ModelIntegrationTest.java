@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import model.IndMap;
 import model.Map;
 import model.Model;
 import model.ParameterPackage;
@@ -232,7 +233,7 @@ public class ModelIntegrationTest {
 
 	@Test
 	public void testSpatialTotalExtinctionIntegration() throws Exception {
-		// 1. Arrange: Create the fake spatial environment (1x1 grid)
+		// Create the fake spatial environment (1x1 grid)
 		// Constructor: name, ncols, nrows, xllcorner, yllcorner, cellsizeX, cellsizeY, nodatavalue
 		// A cell size of 0.01 degrees is roughly 1 sq km at the equator
 		Map envMap = new Map("Infrastructure", 1, 1, 0.0, 0.0, 0.01, 0.01, -9999);
@@ -243,7 +244,7 @@ public class ModelIntegrationTest {
 		initPopMap.setValue(1.0, 0, 0); // Value must be > 0 so the cell isn't skipped during initialization
 		Map[] initialPopulation = new Map[]{ initPopMap };
 
-		// 2. Arrange: Set up parameters
+		// Set up parameters
 		ParameterPackage parameters = new ParameterPackage(); 
 		parameters.speciesNames = new String[]{"TestSpecies"};
 		parameters.lifePhases = new int[][]{{12, 24, 36}};
@@ -280,12 +281,86 @@ public class ModelIntegrationTest {
 		int initialPopulationSize = model.getPopulationHistory(0).get(0);
 		assertTrue(initialPopulationSize > 0, "The spatial initialization should have spawned individuals in cell 0,0.");
 
-		// 3. Act: Execute exactly 1 time-step of the model pipeline
+		// Execute exactly 1 time-step of the model pipeline
 		model.run(1);
 
-		// 4. Assert: Verify the population was entirely wiped out by the 100% mortality rate
+		// Verify the population was entirely wiped out by the 100% mortality rate
 		int populationAfterStepOne = model.getPopulationHistory(0).get(1);
 		assertEquals(0, populationAfterStepOne, 
 				"The spatial population should be completely wiped out (0) after 1 step of 100% mortality.");
+	}
+	
+	@Test
+	public void testSpatialMovement() throws Exception {
+		// Create the fake spatial environment (2x2 grid)
+		// Constructor: name, ncols, nrows, xllcorner, yllcorner, cellsizeX, cellsizeY, nodatavalue
+		// A cell size of 0.01 degrees is roughly 1 sq km at the equator
+		Map envMap = new Map("Infrastructure", 2, 2, 0.0, 0.0, 0.01, 0.01, -9999);
+		envMap.setValue(0.0, 0, 0); // Set road density to 0 all cells
+		envMap.setValue(0.0, 1, 0); // Set road density to 0 all cells
+		envMap.setValue(0.0, 0, 1); // Set road density to 0 all cells
+		envMap.setValue(0.0, 1, 1); // Set road density to 0 all cells
+
+		// Create the fake initial presence map for the species
+		Map initPopMap = new Map("TestSpecies Presence", 2, 2, 0.0, 0.0, 0.01, 0.01, -9999);
+		initPopMap.setValue(1.0, 0, 0); // Initializes the population on in one cell
+		initPopMap.setValue(0.0, 1, 0); // Makes terrain available on other cells
+		initPopMap.setValue(0.0, 0, 1); // Makes terrain available on other cells
+		initPopMap.setValue(0.0, 1, 1); // Makes terrain available on other cells
+		Map[] initialPopulation = new Map[]{ initPopMap };
+
+		//Set up parameters
+		ParameterPackage parameters = new ParameterPackage(); 
+		parameters.speciesNames = new String[]{"TestSpecies"};
+		parameters.lifePhases = new int[][]{{12, 24, 36}};
+		parameters.matAge = new int[]{5};
+		parameters.minLitSize = new int[]{1};
+		parameters.maxLitSize = new int[]{-1};
+		parameters.avgLitSize = new double[]{2};
+		parameters.sexRatio = new double[]{0.5};
+		parameters.minTimeBetweenBreeding = new int[]{10};
+		parameters.avgTimeBetweenBreeding = new double[]{10.0};
+		parameters.mateFindingRadius = new double[]{100.0};
+		parameters.disRan = new double[]{0.0}; //No movement
+		parameters.roadkillPerKmPerYear = new double[][]{{0.0}}; 
+		parameters.sweepingRoadkill = false;
+
+		// SPATIAL-SPECIFIC PARAMETERS:
+		// In the spatial model, startPopValue is ignored. Instead, individuals are generated
+		// based on populationDensity * square kilometers of the cell.
+		parameters.populationDensity = new double[]{100.0}; // 100 individuals per sq km
+		parameters.maxPopulation = new double[]{1000.0};    // Max capacity per cell
+
+		// Force a 0% baseline mortality (0.0) for males and females across all possible phases
+		parameters.baseBirthMort = new double[1][5][2]; 
+		for (int phase = 0; phase < 5; phase++) {
+			parameters.baseBirthMort[0][phase][0] = 0.0; // 0% Male Mortality
+			parameters.baseBirthMort[0][phase][1] = 0.0; // 0% Female Mortality
+		}
+
+		// Initialize the SPATIAL model constructor
+		// Arguments: parameters, initialPopulation Map[], environment Map, nRoadkillVariations, nCores, maxProcessedIndividuals
+		Model model = new Model(parameters, initialPopulation, envMap, 1, 1, 1000);
+		
+
+		// Execute exactly 1 time-step of the model pipeline
+		model.run(5);
+		
+		//Verify the population did not migrate		
+		IndMap popMap = model.getPopulationMap(0);
+		assertTrue(popMap.getCount(0, 0) > 0, "The spatial initialization should have spawned individuals in cell 0,0.");
+		assertEquals(popMap.getCount(0, 1) , 0, "Individuals should not have moved from cell 0,0 to cell 0,1.");
+		
+		//Adjust to allow for movement
+		parameters.disRan = new double[]{1000.0};
+		 model = new Model(parameters, initialPopulation, envMap, 1, 1, 1000);
+		// Execute exactly 1 time-step of the model pipeline
+		model.run(5);
+		
+		//Verify the population did not migrate		
+		popMap = model.getPopulationMap(0);
+		assertTrue(popMap.getCount(0, 0) > 0, "The spatial initialization should have spawned individuals in cell 0,0.");
+		assertTrue(popMap.getCount(0, 1) > 0, "Individuals should have moved from cell 0,0 to cell 0,1.");
+		
 	}
 }
