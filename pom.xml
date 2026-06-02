@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>mortalityRISK</groupId>
   <artifactId>mortalityRISK</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>mortalityRISK</name>
   <build>
     <sourceDirectory>src</sourceDirectory>
@@ -67,14 +67,14 @@
 	        
 	        <appVersion>1.0.0</appVersion>
 	        
-	        <mainJar>mortalityRISK-1.0.0-SNAPSHOT-jar-with-dependencies.jar</mainJar>
+	        <mainJar>mortalityRISK-1.0.0-with-dependencies.jar</mainJar>
 	        <mainClass>gui.FirstWindow</mainClass>
 	        <destination>target/dist</destination>
 	        
 	        <icon>${jpackage.icon}</icon>
 	        
 	        <modulePaths>
-	            <modulePath>target/mortalityRISK-1.0.0-SNAPSHOT-jar-with-dependencies.jar</modulePath>
+	            <modulePath>target/mortalityRISK-1.0.0-with-dependencies.jar</modulePath>
 	        </modulePaths>
 	        <javaOptions>
             <option>-XX:MaxRAMPercentage=75.0</option>
