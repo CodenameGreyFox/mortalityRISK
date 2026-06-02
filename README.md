@@ -26,7 +26,7 @@ The tool includes an accessible, user-friendly Graphical User Interface (GUI) an
 
 ## Workflow Overview
 <p align="center">
-<img src="doc/ModelScheme.png" alt="mortalityRISK Workflow Diagram" width="500" align="center">
+<img src="doc/ModelScheme.png" alt="mortalityRISK Workflow Diagram" width="600" align="center">
 </p>
 
 _Figure 1: Conceptual workflow of mortalityRISK, detailing required dataset inputs, internal interface processes, execution modes, and visual outputs._
