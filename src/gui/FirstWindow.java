@@ -70,8 +70,7 @@ public class FirstWindow {
 
 		frmTheNameOf.setTitle("mortalityRISK");	
 		frmTheNameOf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmTheNameOf.getContentPane().setLayout(new MigLayout("insets 10, gap 0 0", "[grow,center][][][]", "[grow,center][16.00][][16.00][][16.00][][16.00][]"));//"", "[][][][]", "[][][][]"));
-
+		frmTheNameOf.getContentPane().setLayout(new MigLayout("insets 10, gap 0 0", "[grow,left][][push][]", "[grow,center][16.00][][16.00][][16.00][][16.00][]"));
 		JLabel lblNewLabel_7 = new JLabel("");
 		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_7.setIcon(new ImageIcon(FirstWindow.class.getResource("/resources/Logotipo-RISKY-Mortality - Even Smaller.png")));
@@ -85,24 +84,19 @@ public class FirstWindow {
 		JLabel lblNewLabel = new JLabel("MODEL TYPE:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		frmTheNameOf.getContentPane().add(lblNewLabel, "flowx,cell 0 4 4 1,alignx center");
+				
+				JLabel lblNewLabel_1_2_1 = new JLabel("Authors:");
+				lblNewLabel_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+				frmTheNameOf.getContentPane().add(lblNewLabel_1_2_1, "cell 0 7");
+		
+				JLabel versionLabel = new JLabel("<html><b>v1.0.0</b></html>");
+				versionLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
+				frmTheNameOf.getContentPane().add(versionLabel, "cell 3 7,alignx right,aligny bottom");
 
 
-		JLabel lblNewLabel_1_2 = new JLabel("Authors: Neves T., Clara G.");
+		JLabel lblNewLabel_1_2 = new JLabel("Neves T., Clara G.");
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		frmTheNameOf.getContentPane().add(lblNewLabel_1_2, "cell 0 8,alignx left");
-
-		JLabel lblNewLabel_2 = new JLabel("[Legal/Credits]");
-		lblNewLabel_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				new AboutDialog(frmTheNameOf).setVisible(true);
-			}
-		});
-		frmTheNameOf.getContentPane().add(lblNewLabel_2, "cell 1 8");
-
-		JLabel lblNewLabel_1_1 = new JLabel("<html><b>v1.0</b></html>");
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		frmTheNameOf.getContentPane().add(lblNewLabel_1_1, "cell 3 8,alignx right,aligny bottom");
 
 		JRadioButton NonSpatial = new JRadioButton("Non-Spatial");
 		NonSpatialModel.add(NonSpatial);
@@ -129,6 +123,15 @@ public class FirstWindow {
 			}
 		});
 		frmTheNameOf.getContentPane().add(btnNewButton, "flowx,cell 0 6 4 1,alignx center");
+		
+				JLabel lblNewLabel_2 = new JLabel("[Legal/Credits]");
+				lblNewLabel_2.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						new AboutDialog(frmTheNameOf,versionLabel.getText().replace("<html><b>", "").replace("</b></html>", "")).setVisible(true);
+					}
+				});
+				frmTheNameOf.getContentPane().add(lblNewLabel_2, "cell 3 8");
 
 		frmTheNameOf.pack();
 		frmTheNameOf.setLocationRelativeTo(null);

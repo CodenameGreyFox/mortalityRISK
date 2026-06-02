@@ -158,7 +158,7 @@ public class NonSpatialMultiSpeciesWindow implements PropertyChangeListener {
 		frmNonSpatialMultiSpecies.getContentPane().add(lblInputFile, "flowx,cell 0 0 2 1");
 
 
-		SpinnerNumberModel spinnerModelCore = new SpinnerNumberModel(1, 1, Runtime.getRuntime().availableProcessors(), 1);//(int)Math.round(((double)Runtime.getRuntime().availableProcessors())/2+((double)Runtime.getRuntime().availableProcessors())/4), 1, Runtime.getRuntime().availableProcessors(), 1);
+		SpinnerNumberModel spinnerModelCore = new SpinnerNumberModel((int)Math.round(((double)Runtime.getRuntime().availableProcessors())/2+((double)Runtime.getRuntime().availableProcessors())/4), 1, Runtime.getRuntime().availableProcessors(), 1);
 		SpinnerNumberModel spinnerModelRoad = new SpinnerNumberModel(1,0,99,1);  
 
 

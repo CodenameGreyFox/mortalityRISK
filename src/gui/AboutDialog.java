@@ -23,7 +23,7 @@ public class AboutDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 
 	@SuppressWarnings("unused")
-	public AboutDialog(Frame owner) {
+	public AboutDialog(Frame owner, String version) {
         super(owner, "About mortalityRISK", true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(AboutDialog.class.getResource("/resources/Risky 16x16.png")));
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -35,7 +35,7 @@ public class AboutDialog extends JDialog {
         setContentPane(contentPanel);
 
         //HEADER & TITLE ---
-        JLabel titleLabel = new JLabel("mortalityRISK v1.0");
+        JLabel titleLabel = new JLabel("mortalityRISK "+ version);
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
         contentPanel.add(titleLabel, "gapbottom 10, center");
 
@@ -61,7 +61,7 @@ public class AboutDialog extends JDialog {
 
         String disclaimerText = "<html><div style='width: 330px; padding: 8px; font-family: Tahoma; font-size: 10px;'>" +
                 "<b>Legal Notice & Disclaimer:</b><br/>" +
-                "This software is provided \"as is\" without warranty of any kind."+
+                "This software is provided \"as is\" without warranty of any kind. "+
                 "Simulation results depend on model assumptions and input data and should therefore be interpreted with caution." +
                 "The authors are not liable for consequences arising from its use.</div></html>";
 
@@ -84,7 +84,7 @@ public class AboutDialog extends JDialog {
                 "<li><b>JFreeChart & JCommon:</b> Licensed under the GNU Lesser General Public License (LGPL) v2.1. " +
                 "Source code available at <a href='http://www.jfree.org/'>jfree.org</a>.</li>" +
                 "</ul>" +
-                "Full license texts are provided in the root directory of the software distribution.</body></html>";
+                "</body></html>";
 
         creditsPane.setText(creditsText);
         contentPanel.add(creditsPane, "gapbottom 20");
