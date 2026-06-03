@@ -68,7 +68,7 @@ A setup sheet declaring explicit demographic parameters. Key parameters include:
 >A set of sample input files is available [here](https://github.com/CodenameGreyFox/mortalityRISK/tree/main/doc/Sample%20Input%20Files).
 ---
 
-## Command Line Interface (CLI) Execution
+## Command Line Interface (CLI) Execution _(.jar only)_
 
 `mortalityRISK` can be executed headlessly via the command line for automated scripting, cluster environments, or high-throughput batch processing. The arguments must be provided in a strict sequential order depending on your simulation environment.
 _The command strings can be generated through the GUI._
