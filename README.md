@@ -7,7 +7,7 @@
 
 > [!IMPORTANT]
 > ### Download the latest mortalityRISK release here!
-> [![Latest Release](https://img.shields.io/github/v/release/CodenameGreyFox/mortalityRISK?color=blue)](https://github.com/CodenameGreyFox/mortalityRISK/releases/latest)
+> [![Latest Release](https://img.shields.io/github/v/tag/CodenameGreyFox/mortalityRISK?color=blue&label=release)](https://github.com/CodenameGreyFox/mortalityRISK/releases/latest)
 
 **mortalityRISK** is an individual-based, multi-species, stochastic simulation framework built for Population Viability Analysis (PVA). It enables users to evaluate the long-term demographic and spatial consequences of infrastructure-induced wildlife mortality across roads, railways, power lines, and wind farms.  
 
