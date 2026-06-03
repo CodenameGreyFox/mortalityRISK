@@ -68,9 +68,10 @@ A setup sheet declaring explicit demographic parameters. Key parameters include:
 >A set of sample input files is available [here](https://github.com/CodenameGreyFox/mortalityRISK/tree/main/doc/Sample%20Input%20Files).
 ---
 
-## Command Line Interface (CLI) Execution _(.jar only)_
+## Command Line Interface (CLI) Execution
 
 `mortalityRISK` can be executed headlessly via the command line for automated scripting, cluster environments, or high-throughput batch processing. The arguments must be provided in a strict sequential order depending on your simulation environment.
+It is recommended to use the `.jar` version for CLI operations. The `.exe` version will run as a background process and won't show any progress updates in the terminal.
 _The command strings can be generated through the GUI._
 
 ### 1. Spatially Explicit Mode (12 Arguments)
