@@ -7,7 +7,7 @@
 
 > [!IMPORTANT]
 > ### Download the latest mortalityRISK release here!
-> [![Latest Release](https://img.shields.io/badge/Release-v1.0.0-blue)](https://github.com/CodenameGreyFox/mortalityRISK/releases)
+> [![Latest Release](https://img.shields.io/github/v/release/CodenameGreyFox/mortalityRISK?color=blue)](https://github.com/CodenameGreyFox/mortalityRISK/releases/latest)
 
 **mortalityRISK** is an individual-based, multi-species, stochastic simulation framework built for Population Viability Analysis (PVA). It enables users to evaluate the long-term demographic and spatial consequences of infrastructure-induced wildlife mortality across roads, railways, power lines, and wind farms.  
 
@@ -114,11 +114,11 @@ The program saves analytical tables and graphical visualizations out-of-the-box:
 
 ## Authors
 
-* **Tomé Neves** (Code Development & Conceptualization) — CIBIO, Centro de Investigação em Biodiversidade e Recursos Genéticos, Universidade do Porto / Universidade de Lisboa.
-* **Clara Grilo** (Conceptualization) — CIBIO, Centro de Investigação em Biodiversidade e Recursos Genéticos, Universidade do Porto / Universidade de Lisboa.
+_Presently anonymised for reviewing purposes_
 
 ### Project Acknowledgements
-`mortalityRISK` was conceptualized within the framework of project **RISKY** (Wildlife Mortality from Energy and Transport Infrastructure - 03-55-RISKY). It was supported through funding from **OSCARS** via the European Commission’s Horizon Europe Research and Innovation Programme (grant agreement No. 101129751).
+
+_Presently anonymised for reviewing purposes_
 
 ---
 
@@ -137,4 +137,4 @@ This project is licensed under the **MIT License**. You are free to modify, dist
 
 When using `mortalityRISK` or citing the theoretical modeling framework, please reference our main article:
 
-> Neves, T., & Grilo, C. (under review). mortalityRISK: a spatially explicit tool for evaluating wildlife population responses to infrastructure-induced mortality. _Methods In Ecology and Evolution_. 
+> _Presently anonymised for reviewing purposes_ (under review). mortalityRISK: a spatially explicit tool for evaluating wildlife population responses to infrastructure-induced mortality. _Methods In Ecology and Evolution_. 
