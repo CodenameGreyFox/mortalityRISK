@@ -790,8 +790,8 @@ public class SpatialMultiSpeciesWindow implements PropertyChangeListener {
 				"Parameters.xlsx" + " " +
 				"\""+ txtInitialPopulationLocation.getText().replace("\\", "/") + "\" " + 
 				"\""+ txtRoadFileLocation.getText().replace("\\", "/") + "\" " +			
-				iterationsToRun.getText() + " " +
-				numberOfRepetitions.getValue() + " " +
+				"\""+ iterationsToRun.getText() + "\" " +
+				numberOfRepetitions.getValue() + "\" " +
 				numberOfRoadVariations.getValue() +	 " " +
 				minPersistenceThreshold.getValue() + " " +
 				"\""+ txtOutputLocation.getText().replace("\\", "/") +	 "\" " +	

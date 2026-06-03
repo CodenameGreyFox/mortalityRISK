@@ -788,7 +788,7 @@ public class NonSpatialMultiSpeciesWindow implements PropertyChangeListener {
 		String command = "java -jar mortalityRISK.jar " +
 				"Parameters.xlsx" + " " +
 				textFieldInfraDensity.getText() + " " +			
-				iterationsToRun.getText() + " " +
+				"\""+iterationsToRun.getText() + "\" " +
 				numberOfRepetitions.getValue() + " " +
 				numberOfRoadVariations.getValue() +	 " " +
 				"\""+txtOutputLocation.getText().replace("\\", "/") +	 "\" " +	
