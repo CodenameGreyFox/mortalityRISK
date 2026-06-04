@@ -47,7 +47,7 @@ public class AboutDialog extends JDialog {
         descLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
         contentPanel.add(descLabel, "gapbottom 5");
 
-        JLabel authorsLabel = new JLabel("<html>\r\n<p>Please cite as:</p>\r\n<p>Neves T. & Grilo C. (2026) Citation to be defined</p>");
+        JLabel authorsLabel = new JLabel("<html>\r\n<p>Please cite as:</p>\r\n<p>Presently anonymised for reviewing purposes (2026) Citation to be defined</p>");
         authorsLabel.setFont(new Font("Tahoma", Font.ITALIC, 11));
         contentPanel.add(authorsLabel, "gapbottom 15, center");
 

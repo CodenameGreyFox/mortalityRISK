@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * Class that handles the population map
  *
- * @author  Tomé Neves
  */
 
 public class IndMap {

@@ -94,7 +94,7 @@ public class FirstWindow {
 				frmTheNameOf.getContentPane().add(versionLabel, "cell 3 7,alignx right,aligny bottom");
 
 
-		JLabel lblNewLabel_1_2 = new JLabel("Neves T., Clara G.");
+		JLabel lblNewLabel_1_2 = new JLabel("Presently anonymised for reviewing purposes");
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		frmTheNameOf.getContentPane().add(lblNewLabel_1_2, "cell 0 8,alignx left");
 

@@ -22,6 +22,9 @@ import javax.swing.SwingConstants;
 import javax.swing.ToolTipManager;
 import javax.swing.ImageIcon;
 
+/**
+ * Class that deals with the GUI to generate the xlsx template.
+ */
 public class GenerateTemplateWindow {
 
 	private static JFrame frmTemplateSettings;

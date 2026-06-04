@@ -8,6 +8,7 @@ import gui.XLSreader;
 /**
  * Class to store the parameters of the model
  */
+
 public class ParameterPackage {
 
 	public String[] speciesNames;

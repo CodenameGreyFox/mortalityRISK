@@ -21,6 +21,10 @@ import org.jfree.data.xy.YIntervalSeriesCollection;
 import graphics.DeviationGrapher;
 import graphics.StatisticalBarChart;
 
+/**
+ * Class that processes the results and provides csv and images.
+ */
+
 public class OutputProcessor {
 
 
