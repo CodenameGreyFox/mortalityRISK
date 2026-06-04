@@ -140,4 +140,4 @@ This project is licensed under the **MIT License**. You are free to modify, dist
 
 When using `mortalityRISK` or citing the theoretical modeling framework, please reference our main article:
 
-> _Presently anonymised for reviewing purposes_ (under review). mortalityRISK: a spatially explicit tool for evaluating wildlife population responses to infrastructure-induced mortality. _Methods In Ecology and Evolution_. 
+> _Presently anonymised for reviewing purposes_ (under review). mortalityRISK: a spatially explicit tool for evaluating wildlife population responses to infrastructure-induced mortality. _Journal TBD_. 
