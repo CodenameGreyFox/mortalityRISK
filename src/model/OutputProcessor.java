@@ -459,7 +459,7 @@ public class OutputProcessor {
 			}
 		}
 
-		String finalTableOutput = "Species,Final Surviving Area (km2),Final Extinct Area (km2),Suriving Area %\n";
+		String finalTableOutput = "Species,Final Surviving Area (km2),Final Extinct Area (km2),Surviving Area %\n";
 		for ( int species = 0; species < survivalPercentage.length; species++) {
 			finalTableOutput += speciesNames[species]+","+finalSurvingArea[species]+","+finalExtinctArea[species] +","+(finalSurvingArea[species]/(finalSurvingArea[species]+finalExtinctArea[species])) +"\n";
 		}
