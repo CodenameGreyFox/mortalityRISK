@@ -155,7 +155,7 @@ public class NoGUI {
 
 				double currentMortality =  sweepResolutionMin +  sweepN*(sweepResolutionMax-sweepResolutionMin)/((double)sweepRes-1);							
 
-				if (sweepRoadkillInstead) { //Sweeps base mortality or roadkill mortality, depending on the selection
+				if (!sweepRoadkillInstead) { //Sweeps base mortality or roadkill mortality, depending on the selection
 					for (int numSpecies = 0; numSpecies < modelParameters.baseBirthMort.length; numSpecies++) {
 
 						//Scales the provided mortality to yearly, based on the provided time unit
