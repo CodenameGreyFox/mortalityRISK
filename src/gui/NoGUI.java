@@ -189,7 +189,7 @@ public class NoGUI {
 
 					for (int numSpecies = 0; numSpecies < modelParameters.baseBirthMort.length; numSpecies++) {
 						//Scales the provided roadkill mortality to yearly, based on the provided time unit
-						if (scaleToYear) {
+						if (!scaleToYear) {
 							roadkillPercentage[numSpecies][0] = currentMortality;
 							roadkillPercentage[numSpecies][1] = currentMortality;
 						} else {
