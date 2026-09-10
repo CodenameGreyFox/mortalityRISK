@@ -334,7 +334,7 @@ public class Map {
 			}
 		}
 	}
-	
+
 
 
 
@@ -346,7 +346,7 @@ public class Map {
 	 * @return double Value of the pixel
 	 */
 	public double getValue(int x, int y) {
-		
+
 		return map[x][y];
 	}
 
@@ -358,7 +358,7 @@ public class Map {
 	 */
 	public int getLonCol(double lon) {
 		int col = (int) Math.round(((lon - xllcorner - cellsizeX*0.5)/cellsizeX));		
-		
+
 		if (col >= ncols || col < 0) {
 			col = -1;
 		}
@@ -456,7 +456,7 @@ public class Map {
 	public double getCellXSize(){
 		return cellsizeX;
 	}
-	
+
 	/**
 	 * Returns the cell size of the map
 	 *
@@ -556,7 +556,7 @@ public class Map {
 			writer.write("xllcorner    "+xllcorner+"\n");
 			writer.write("yllcorner    "+yllcorner+"\n");
 			if (cellsizeX == cellsizeY) {
-			writer.write("cellsize     "+cellsizeX+"\n");
+				writer.write("cellsize     "+cellsizeX+"\n");
 			} else {
 				writer.write("dx           "+cellsizeX+"\n");
 				writer.write("dy           "+cellsizeX+"\n");				
@@ -658,22 +658,22 @@ public class Map {
 
 		double brArea = haversine(xllcorner+cellsizeX*ncols,yllcorner+cellsizeY*nrows,xllcorner+cellsizeX*(ncols+1),yllcorner+cellsizeY*nrows)*haversine(xllcorner+cellsizeX*ncols,yllcorner+cellsizeY*nrows,xllcorner+cellsizeX*ncols,yllcorner+cellsizeY*(nrows+1));
 
-				
+
 		return (tlArea+brArea)/2;
 	}
-	
+
 	/**
 	 * Returns the square kilometers of the pixel
 	 * @return double Square kilometers of the pixel
 	 */
 
-	
+
 	public double getSqKMeters(int x, int y) {
 
 		return haversine(xllcorner+cellsizeX*x,yllcorner+y,xllcorner+cellsizeX*(x+1),yllcorner+cellsizeY*y)*haversine(xllcorner+cellsizeX*x,yllcorner+cellsizeY*y,xllcorner+cellsizeX*x,yllcorner+cellsizeY*(y+1));
 
 	}
-	
+
 	/**
 	 * Helper function to calculate distance between two coordinates
 	 *
@@ -703,7 +703,7 @@ public class Map {
 	}
 
 	/**
-	*Convert this Map into an IndMap, masked by the give map
+	 *Convert this Map into an IndMap, masked by the give map
 
 	 * @param is
 	 * @param mask
@@ -711,6 +711,34 @@ public class Map {
 	 */
 	public IndMap toIndMap(int[] lifePhases, Map mask) {
 		return new IndMap(this, lifePhases, mask);
+	}
+
+	/**
+	 * Converts the % mortality values in days/weeks/months to yearly.
+	 * @param timeUnit
+	 */
+	public void convertToYearly(String timeUnit) {
+		for(int x = 0; x < ncols; x++ ) {
+			for (int y = 0; y < nrows; y++) {
+				if (getValue(x, y) != NODATA_value) {
+					double newValue = getValue(x,y);
+					switch(timeUnit) {
+					case "Day":
+						newValue = (1-Math.pow(1-newValue,365.0));		
+						break;
+					case "Week":
+						newValue = (1-Math.pow(1-newValue,52.1429));
+						break;
+					case "Month":
+						newValue = (1-Math.pow(1-newValue,12));
+						break;
+					default:
+						break;
+					}						
+					setValue(newValue,x,y);
+				}
+			}
+		}
 	}
 
 }

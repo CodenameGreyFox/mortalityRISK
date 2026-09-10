@@ -264,7 +264,7 @@ public class NoGUI {
 		}
 
 		OutputProcessor.process(resultsRepeated,resultsExtinctionRepeated,model.getRoadMortality() ,txtOutputLocation, model.getSpeciesNames(), "NonSpatial", 0.5,numberOfRoadVariations,
-				modelParameters,txtYyyymmdd, TimeUnit, sweepMortalityCheck?(sweepResolution):1, (double) sweepResolutionMin, (double) sweepResolutionMax,itToRun , numberOfRepetitions,generateCommand("NonSpatial"));
+				modelParameters,txtYyyymmdd, TimeUnit, sweepMortalityCheck?(sweepResolution):1, (double) sweepResolutionMin, (double) sweepResolutionMax,itToRun , numberOfRepetitions,generateCommand("NonSpatial"), false);
 
 
 	}
@@ -371,10 +371,7 @@ public class NoGUI {
 
 
 		OutputProcessor.process(resultsRepeated,resultsExtinctionRepeated,model.getRoadMortality() ,txtOutputLocation, model.getSpeciesNames(), "Spatial", minPersistenceThreshold,numberOfRoadVariations,
-				modelParameters,txtYyyymmdd, TimeUnit, 1, 0, 0, itToRun , numberOfRepetitions,generateCommand("Spatial"));
-
-
-
+				modelParameters,txtYyyymmdd, TimeUnit, 1, 0, 0, itToRun , numberOfRepetitions,generateCommand("Spatial"), false);
 	}
 
 

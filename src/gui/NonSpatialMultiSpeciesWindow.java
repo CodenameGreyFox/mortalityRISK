@@ -710,7 +710,7 @@ public class NonSpatialMultiSpeciesWindow implements PropertyChangeListener {
 			} else {
 				//Processes the results and generates the maps and graphs
 				OutputProcessor.process(resultsRepeated,resultsExtinctionRepeated,model.getRoadMortality() ,txtOutputLocation.getText(), model.getSpeciesNames(), "NonSpatial", 0.5 ,(int)numberOfRoadVariations.getValue(),
-						modelParameters,txtYyyymmdd.getText(), (String) comboBoxTimeUnit.getSelectedItem(), sweepMortalityCheck.isSelected()?((int)sweepResolution.getValue()):1, (double) sweepResolutionMin.getValue(), (double) sweepResolutionMax.getValue(),itToRun , (int)numberOfRepetitions.getValue(), generateCommand());
+						modelParameters,txtYyyymmdd.getText(), (String) comboBoxTimeUnit.getSelectedItem(), sweepMortalityCheck.isSelected()?((int)sweepResolution.getValue()):1, (double) sweepResolutionMin.getValue(), (double) sweepResolutionMax.getValue(),itToRun , (int)numberOfRepetitions.getValue(), generateCommand(), chckbxScaleToYear.isSelected());
 
 				generateCommand();
 

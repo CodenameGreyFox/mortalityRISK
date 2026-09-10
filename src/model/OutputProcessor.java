@@ -38,8 +38,8 @@ public class OutputProcessor {
 	 * @param section
 	 * @param minPersistenceThreshold - percentage (0-1) of runs that led to extinction for it to be considered an extinction
 	 */
-	static public void process( String[][] resultsRepeated, Map[][][] resultsExtinctionRepeated, String workDirectory, String[] speciesNames, String type, double minPersistenceThreshold, ParameterPackage parameters, int[] iterations, int repetitions, String command ) {
-		process( resultsRepeated, resultsExtinctionRepeated, null,  workDirectory, speciesNames, type, minPersistenceThreshold, 0,parameters,null,null,1,0,1, iterations, repetitions, command ) ;
+	static public void process( String[][] resultsRepeated, Map[][][] resultsExtinctionRepeated, String workDirectory, String[] speciesNames, String type, double minPersistenceThreshold, ParameterPackage parameters, int[] iterations, int repetitions, String command, boolean scaleMortalityToYearly ) {
+		process( resultsRepeated, resultsExtinctionRepeated, null,  workDirectory, speciesNames, type, minPersistenceThreshold, 0,parameters,null,null,1,0,1, iterations, repetitions, command,  scaleMortalityToYearly) ;
 	}
 	
 	/**
@@ -51,7 +51,7 @@ public class OutputProcessor {
 	 * @param section
 	 */
 	static public void process( String[][] resultsRepeated, Map[][][] resultsExtinctionRepeated, Map[] roadMortality, String workDirectory, String[] speciesNames, String type,
-			double minPersistenceThreshold, double nRoadVariations, ParameterPackage parameters,String dateString,String timeUnit, int sweepRes, double sweepMin, double sweepMax, int[] iterations, int repetitions, String command) {
+			double minPersistenceThreshold, double nRoadVariations, ParameterPackage parameters,String dateString,String timeUnit, int sweepRes, double sweepMin, double sweepMax, int[] iterations, int repetitions, String command, boolean scaleMortalityToYearly) {
 
 		//Formats the date
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -142,7 +142,7 @@ public class OutputProcessor {
 				processData(resultsRepeated, resultsFolder.toString(), speciesNames, nRoadVariations, date, timeUnit, iterations[cut] );
 			}
 			if(type.contentEquals("Spatial")) {
-				processMaps( resultsExtinctionRepeated[cut],roadMortality ,resultsFolder.toString(), speciesNames, minPersistenceThreshold ,nRoadVariations);
+				processMaps( resultsExtinctionRepeated[cut],roadMortality ,resultsFolder.toString(), speciesNames, minPersistenceThreshold ,nRoadVariations, scaleMortalityToYearly, timeUnit);
 			}
 		}
 	}
@@ -353,7 +353,7 @@ public class OutputProcessor {
 	 * @param minPersistenceThreshold
 	 * @param nRoadVariations
 	 */
-	static private void processMaps( Map[][] resultsExtinctionRepeated, Map[] roadMortality, String workDirectory, String[] speciesNames, double minPersistenceThreshold, double nRoadVariations ) {
+	static private void processMaps( Map[][] resultsExtinctionRepeated, Map[] roadMortality, String workDirectory, String[] speciesNames, double minPersistenceThreshold, double nRoadVariations, boolean scaleMortalityToYearly, String timeUnit) {
 
 		//Gets the index value of the true road size
 		int[] trueIndexes = new int[(int)(speciesNames.length/(nRoadVariations+1))];
@@ -397,7 +397,12 @@ public class OutputProcessor {
 			survivalPercentage[species].saveToFile(Path.of(workDirectory,speciesNames[species]+" Survival Rate.asc").toString());
 
 			if (roadMortality != null) {
-				roadMortality[species].saveToFile(Path.of(workDirectory,speciesNames[species]+" Roadkill Mortality Percentage.asc").toString());
+				Map roadMortalityTemp = roadMortality[species].clone();
+				if (scaleMortalityToYearly) {
+					roadMortalityTemp.convertToYearly(timeUnit);
+				}
+				roadMortalityTemp.saveToFile(Path.of(workDirectory,speciesNames[species]+" Roadkill Mortality Percentage.asc").toString());
+				
 			}
 
 
@@ -434,7 +439,6 @@ public class OutputProcessor {
 		//
 		//Create a table detailing the various parameters of extinction
 		//
-		//(maior perda de popula��o, menor popula��o)
 
 		//Calculates the final area for each species
 		double[] finalSurvingArea = new double[survivalPercentage.length];

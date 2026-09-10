@@ -33,6 +33,7 @@ import model.Model;
 import model.OutputProcessor;
 import model.ParameterPackage;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.JCheckBox;
 
 /**
  * Class that provides the GUI for the Spatial Model
@@ -103,6 +104,8 @@ public class SpatialMultiSpeciesWindow implements PropertyChangeListener {
 	private JLabel lblInfoTemplate;
 	private JLabel lblInfoOutput;
 	private JButton btnParameterHelp;
+	private JCheckBox chckbxScaleToYear;
+	private JLabel lblInfoScale;
 
 
 	/**
@@ -331,6 +334,9 @@ public class SpatialMultiSpeciesWindow implements PropertyChangeListener {
 				}
 			}
 		});		
+		
+		chckbxScaleToYear = new JCheckBox("Scale mortality to yearly?");
+		frmSpatialMultiSpecies.getContentPane().add(chckbxScaleToYear, "flowx,cell 0 10 2 1,alignx center,aligny center");
 
 		lblMaxProcessedInd = new JLabel("Max. Processed Ind. :");
 		frmSpatialMultiSpecies.getContentPane().add(lblMaxProcessedInd, "cell 2 10,alignx right");
@@ -498,6 +504,12 @@ public class SpatialMultiSpeciesWindow implements PropertyChangeListener {
 		lblInfoOutput.setToolTipText("<html>\r\n<p>Folder where the results will be saved.</p>\r\n</html>");
 		lblInfoOutput.setHorizontalAlignment(SwingConstants.RIGHT);
 		frmSpatialMultiSpecies.getContentPane().add(lblInfoOutput, "cell 0 12");
+		
+		lblInfoScale = new JLabel("");
+		lblInfoScale.setToolTipText("<html>\r\n<p>Scales the values in the \"Roadkill Mortality Percentage\" to yearly.</p>\r\n</html>");
+		lblInfoScale.setIcon(new ImageIcon(SpatialMultiSpeciesWindow.class.getResource("/resources/Information Icon.png")));
+		lblInfoScale.setHorizontalAlignment(SwingConstants.RIGHT);
+		frmSpatialMultiSpecies.getContentPane().add(lblInfoScale, "cell 0 10");
 
 		frmSpatialMultiSpecies.pack();
 		frmSpatialMultiSpecies.setLocationRelativeTo(null);
@@ -622,7 +634,7 @@ public class SpatialMultiSpeciesWindow implements PropertyChangeListener {
 			} else {
 				//Processes the results and generates the maps and graphs
 				OutputProcessor.process(resultsRepeated,resultsExtinctionRepeated,model.getRoadMortality() ,txtOutputLocation.getText(), model.getSpeciesNames(), "Spatial",(double) minPersistenceThreshold.getValue(),(int)numberOfRoadVariations.getValue(),
-						modelParameters,txtYyyymmdd.getText(), (String) comboBoxTimeUnit.getSelectedItem(), 1, 0, 0, itToRun , (int)numberOfRepetitions.getValue(), generateCommand());
+						modelParameters,txtYyyymmdd.getText(), (String) comboBoxTimeUnit.getSelectedItem(), 1, 0, 0, itToRun , (int)numberOfRepetitions.getValue(), generateCommand(), chckbxScaleToYear.isSelected());
 
 
 				
