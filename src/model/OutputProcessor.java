@@ -401,7 +401,7 @@ public class OutputProcessor {
 				if (scaleMortalityToYearly) {
 					roadMortalityTemp.convertToYearly(timeUnit);
 				}
-				roadMortalityTemp.saveToFile(Path.of(workDirectory,speciesNames[species]+" Roadkill Mortality Percentage.asc").toString());
+				roadMortalityTemp.saveToFile(Path.of(workDirectory,speciesNames[species]+" Infrastructure Mortality Percentage.asc").toString());
 				
 			}
 
