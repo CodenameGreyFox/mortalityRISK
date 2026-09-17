@@ -270,7 +270,7 @@ public class OutputProcessor {
 				defaultstatisticalcategorydataset.add(100-finalSurvivalRateEachRoad[i], 0, speciesNames[i].substring(0, speciesNames[i].lastIndexOf(" ")), speciesNames[i].substring(speciesNames[i].lastIndexOf(" ")));
 			}
 
-			StatisticalBarChart.graph(defaultstatisticalcategorydataset, Path.of(workDirectory,"Survival Rate Over Road Density.png").toFile());
+			StatisticalBarChart.graph(defaultstatisticalcategorydataset, Path.of(workDirectory,"Survival Rate Over Infrastructure Density.png").toFile());
 
 			///Creates a population time series graph for each species and road variations
 			for (int speciesN = 0; speciesN<trueIndexes.length; speciesN++) {				

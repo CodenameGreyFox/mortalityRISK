@@ -54,7 +54,7 @@ public class StatisticalBarChart extends JFrame {
 	 * @return
 	 */
 	private static JFreeChart createChart(CategoryDataset categorydataset) {
-		JFreeChart jfreechart = ChartFactory.createLineChart("Percentage of Extinction along Road Density", "Road Density", "Percentage of extinction",
+		JFreeChart jfreechart = ChartFactory.createLineChart("Percentage of Extinction along Infrastructure Density", "Infrastructure Density", "Percentage of extinction",
 				categorydataset, PlotOrientation.VERTICAL, true, true, false);
 		jfreechart.setBackgroundPaint(Color.white);
 		CategoryPlot categoryplot = (CategoryPlot) jfreechart.getPlot();
@@ -99,7 +99,7 @@ public class StatisticalBarChart extends JFrame {
 	 */
 	public static void graph(CategoryDataset dataset) {
 		StatisticalBarChart statisticalbarchartdemo1 = new StatisticalBarChart(
-				"Survival along Road Density", dataset);
+				"Survival along Infrastructure Density", dataset);
 		statisticalbarchartdemo1.pack();
 		RefineryUtilities.centerFrameOnScreen(statisticalbarchartdemo1);
 		statisticalbarchartdemo1.setVisible(true);		
@@ -116,7 +116,7 @@ public class StatisticalBarChart extends JFrame {
 			return;
 		}
 		StatisticalBarChart statisticalbarchartdemo1 = new StatisticalBarChart(
-				"Survival along Road Density", dataset);
+				"Survival along Infrastructure Density", dataset);
 		 Container contentPane = statisticalbarchartdemo1.getContentPane();
 		statisticalbarchartdemo1.pack();
 		RefineryUtilities.centerFrameOnScreen(statisticalbarchartdemo1);
