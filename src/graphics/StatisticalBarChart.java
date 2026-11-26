@@ -3,6 +3,7 @@ package graphics;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
@@ -25,6 +26,7 @@ import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.StatisticalBarRenderer;
+import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.ui.RefineryUtilities;
 import org.jfree.ui.TextAnchor;
@@ -78,6 +80,23 @@ public class StatisticalBarChart extends JFrame {
 		statisticalbarrenderer.setBaseItemLabelsVisible(true);
 		statisticalbarrenderer.setBasePositiveItemLabelPosition(
 				new ItemLabelPosition(ItemLabelAnchor.INSIDE6, TextAnchor.BOTTOM_CENTER));
+		
+		
+		Font titleFont = new Font("SansSerif", Font.BOLD, 18);
+	    Font tickFont = new Font("SansSerif", Font.PLAIN, 15);
+
+	    LegendTitle legend = jfreechart.getLegend();
+	    if (legend != null) {
+	        legend.setItemFont(tickFont); // Legend
+	    }
+	    
+	    // Apply to X Axis
+	    categoryplot.getDomainAxis().setLabelFont(titleFont);      // Axis Title
+	    categoryplot.getDomainAxis().setTickLabelFont(tickFont);   // Axis Ticks / Values
+
+	    // Apply to Y Axis
+	    categoryplot.getRangeAxis().setLabelFont(titleFont);       // Axis Title
+	    categoryplot.getRangeAxis().setTickLabelFont(tickFont);    // Axis Ticks / Values
 		
 		categoryplot.setBackgroundPaint(new Color(0xe6e6e6));
         

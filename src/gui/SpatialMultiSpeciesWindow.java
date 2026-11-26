@@ -506,7 +506,7 @@ public class SpatialMultiSpeciesWindow implements PropertyChangeListener {
 		frmSpatialMultiSpecies.getContentPane().add(lblInfoOutput, "cell 0 12");
 		
 		lblInfoScale = new JLabel("");
-		lblInfoScale.setToolTipText("<html>\r\n<p>Scales the values in the \"Roadkill Mortality Percentage\" to yearly.</p>\r\n</html>");
+		lblInfoScale.setToolTipText("<html>\r\n<p>Scales the values in the \"Infrastructure Mortality Percentage\" to yearly.</p>\r\n</html>");
 		lblInfoScale.setIcon(new ImageIcon(SpatialMultiSpeciesWindow.class.getResource("/resources/Information Icon.png")));
 		lblInfoScale.setHorizontalAlignment(SwingConstants.RIGHT);
 		frmSpatialMultiSpecies.getContentPane().add(lblInfoScale, "cell 0 10");

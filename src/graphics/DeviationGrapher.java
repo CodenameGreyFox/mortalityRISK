@@ -3,6 +3,7 @@ package graphics;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
@@ -21,6 +22,7 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.SymbolAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.DeviationRenderer;
+import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.YIntervalSeriesCollection;
 import org.jfree.ui.RectangleInsets;
@@ -102,9 +104,23 @@ public class DeviationGrapher extends JFrame {
 		}
 
 
+		Font titleFont = new Font("SansSerif", Font.BOLD, 18);
+	    Font tickFont = new Font("SansSerif", Font.PLAIN, 15);
 
+	    LegendTitle legend = chart.getLegend();
+	    if (legend != null) {
+	        legend.setItemFont(tickFont); // Legend
+	    }
+	    
+	    // Apply to X Axis
+	    plot.getDomainAxis().setLabelFont(titleFont);      // Axis Title
+	    plot.getDomainAxis().setTickLabelFont(tickFont);   // Axis Ticks / Values
 
-		//
+	    // Apply to Y Axis
+	    plot.getRangeAxis().setLabelFont(titleFont);       // Axis Title
+	    plot.getRangeAxis().setTickLabelFont(tickFont);    // Axis Ticks / Values
+
+		
 		plot.setBackgroundPaint(new Color(0xe6e6e6));
 		plot.setRangeTickBandPaint(new Color(0xe6e6e6));
 
